@@ -47,6 +47,7 @@
     catch { const input = document.getElementById('share-url'); input.focus(); input.select(); copied = document.execCommand('copy'); }
     document.getElementById('copy-status').textContent = copied ? 'Ссылка скопирована — отправьте её в мессенджер.' : 'Выделите и скопируйте ссылку вручную.';
   });
+  document.getElementById('qr-open').addEventListener('click', () => document.getElementById('qr-dialog').showModal());
   for (const dialog of document.querySelectorAll('dialog')) {
     dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', event => { if (event.target !== dialog) return; const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); });
