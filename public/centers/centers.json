@@ -1,0 +1,168 @@
+[
+  {
+    "id": "sochi-vorovskogo",
+    "city": "Сочи",
+    "country": "Россия",
+    "name": "Воровского",
+    "aliases": "Sochi",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "ул. Воровского, 58/2",
+        "url": "https://yandex.ru/maps/org/phond_p/147630925140/"
+      },
+      {
+        "provider": "2gis",
+        "address": "ул. Воровского, 58/3",
+        "url": "https://2gis.ru/sochi/firm/70000001099460960"
+      }
+    ]
+  },
+  {
+    "id": "sochi-kurortny",
+    "city": "Сочи",
+    "country": "Россия",
+    "name": "Курортный проспект",
+    "aliases": "Sochi",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "Курортный проспект, 75Б",
+        "url": "https://yandex.ru/maps/org/phond_p/180225283380/"
+      },
+      {
+        "provider": "2gis",
+        "address": "Курортный проспект, 75Б",
+        "url": "https://2gis.ru/sochi/firm/70000001099737003"
+      }
+    ]
+  },
+  {
+    "id": "ekaterinburg",
+    "city": "Екатеринбург",
+    "country": "Россия",
+    "name": "Бажова",
+    "aliases": "Екб Ekaterinburg Yekaterinburg",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "ул. Бажова, 43",
+        "url": "https://yandex.ru/maps/org/phondup/219183926547/"
+      },
+      {
+        "provider": "2gis",
+        "address": "ул. Бажова, 43",
+        "url": "https://2gis.ru/ekaterinburg/firm/70000001116248363"
+      }
+    ]
+  },
+  {
+    "id": "chelyabinsk",
+    "city": "Челябинск",
+    "country": "Россия",
+    "name": "Свердловский проспект",
+    "aliases": "Chelyabinsk",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "Свердловский проспект, 86",
+        "url": "https://yandex.ru/maps/org/phondup/52095182904/"
+      },
+      {
+        "provider": "2gis",
+        "address": "Челябинск",
+        "url": "https://2gis.ru/chelyabinsk/geo/70000001118407452"
+      }
+    ]
+  },
+  {
+    "id": "tyumen",
+    "city": "Тюмень",
+    "country": "Россия",
+    "name": "50 лет Октября",
+    "aliases": "Tyumen",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "ул. 50 лет Октября, 120",
+        "url": "https://yandex.ru/maps/org/phondup/205918042771/"
+      },
+      {
+        "provider": "2gis",
+        "address": "Тюмень",
+        "url": "https://2gis.ru/tyumen/geo/70000001118679050"
+      }
+    ]
+  },
+  {
+    "id": "ufa",
+    "city": "Уфа",
+    "country": "Россия",
+    "name": "Достоевского",
+    "aliases": "Ufa",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "ул. Достоевского, 134",
+        "url": "https://yandex.ru/maps/org/phondup/145723338664/"
+      },
+      {
+        "provider": "2gis",
+        "address": "Уфа",
+        "url": "https://2gis.ru/ufa/geo/70000001118728823"
+      }
+    ]
+  },
+  {
+    "id": "omsk",
+    "city": "Омск",
+    "country": "Россия",
+    "name": "Ангарская",
+    "aliases": "Omsk",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "Ангарская улица, 14",
+        "url": "https://yandex.ru/maps/org/phondup/233883770979/reviews/"
+      },
+      {
+        "provider": "2gis",
+        "address": "Омск",
+        "url": "https://2gis.ru/omsk/geo/70000001118728725"
+      }
+    ]
+  },
+  {
+    "id": "krasnodar",
+    "city": "Краснодар",
+    "country": "Россия",
+    "name": "Леваневского",
+    "aliases": "Krasnodar микрорайон Центральный",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "ул. Леваневского, 28, мкр. Центральный",
+        "url": "https://yandex.ru/maps/org/phond_p/155904807372?si=efuhh5j8fvrjh50zakamz8pvn0"
+      },
+      {
+        "provider": "2gis",
+        "address": "ул. Леваневского, 28",
+        "url": "https://2gis.ru/krasnodar/geo/70000001118385784"
+      }
+    ]
+  },
+  {
+    "id": "petropavl",
+    "city": "Петропавловск",
+    "country": "Казахстан",
+    "name": "Жамбыла",
+    "aliases": "Петропавл Petropavl Petropavlovsk",
+    "links": [
+      {
+        "provider": "yandex",
+        "address": "ул. Жамбыла, 190",
+        "url": "https://yandex.com/maps/org/phondup/168703892066/"
+      }
+    ]
+  }
+]
