@@ -25,12 +25,23 @@ def api(method, token, **kwargs):
         raise RuntimeError("VK API {} error {}: {}".format(method, error.get("error_code"), error.get("error_msg")))
     return data.get("response")
 
-def get_group(token):
-    data = api("groups.getById", token, group_ids="phondup")
-    groups = data.get("groups", []) if isinstance(data, dict) else data
-    if not isinstance(groups, list) or not groups or not groups[0].get("id"):
-        raise RuntimeError("VK did not resolve the PHONDUP community")
-    return int(groups[0]["id"])
+def get_group_id():
+    group_id = os.environ.get("VK_GROUP_ID", "").strip()
+    if not group_id.isdecimal() or int(group_id) <= 0:
+        raise RuntimeError("Missing numeric VK_GROUP_ID repository variable; required for posting")
+    return int(group_id)
+
+def check_community_token(token):
+    # groups.getById can reject a group token even when that token is valid.
+    data = api("groups.getTokenPermissions", token)
+    if not isinstance(data, dict):
+        raise RuntimeError("VK did not return group-token permissions")
+    raw = data.get("permissions", [])
+    names = [item.get("name", "") if isinstance(item, dict) else item for item in raw]
+    if "wall" not in names:
+        raise RuntimeError("Token is valid, but no 'wall' permission: enable community wall access")
+    print("VK community token accepted. Wall permission is enabled.")
+    print("No content has been posted.")
 
 def main():
     parser = argparse.ArgumentParser()
@@ -40,11 +51,11 @@ def main():
     token = os.environ.get("VK_ACCESS_TOKEN", "")
     if not token:
         raise RuntimeError("Missing VK_ACCESS_TOKEN Actions secret")
-    gid = get_group(token)
+    check_community_token(token)
     if args.check:
-        print("VK community token verified for lookup: https://vk.com/club{}".format(gid))
-        print("Note: wall.post capability has not yet been verified")
+        print("Note: publication access has not yet been tested.")
         return
+    gid = get_group_id()
     if not args.post_file:
         parser.error("post_file required")
     path = Path(args.post_file)
