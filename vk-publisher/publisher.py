@@ -34,11 +34,11 @@ def api(method, token, **kwargs):
         summary = os.environ.get("GITHUB_STEP_SUMMARY")
         if summary:
             with open(summary, "a", encoding="utf-8") as result:
-                result.write("### PHONDUP / VK API\\n\\n")
-                result.write("**Kod oshibki VK: {}**\\n\\n".format(code))
-                result.write("{}\\n\\n".format(hint))
-                result.write("Publikatsii ne bylo.\\n")
-        raise RuntimeError("VK ERROR CODE: {}\\nVK HINT: {}".format(code, hint))
+                result.write("### PHONDUP / VK API\n\n")
+                result.write("**Kod oshibki VK: {}**\n\n".format(code))
+                result.write("{}\n\n".format(hint))
+                result.write("Publikatsii ne bylo.\n")
+        raise RuntimeError("VK ERROR CODE: {}\nVK HINT: {}".format(code, hint))
     return data.get("response")
 
 def get_group_id():
