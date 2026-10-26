@@ -22,7 +22,23 @@ def api(method, token, **kwargs):
         raise RuntimeError("Could not reach VK API") from None
     if "error" in data:
         error = data["error"]
-        raise RuntimeError("VK API {} error {}: {}".format(method, error.get("error_code"), error.get("error_msg")))
+        code = error.get("error_code", "?")
+        hints = {
+            5: "VK ne prinial token. Prover VK_ACCESS_TOKEN: polnyi kluch soobshchestva, bez probelov i kavychek.",
+            15: "Nedostatochno prav. Prover dostup k stene soobshchestva.",
+            27: "Metod nedostupen etomu tipu tokena.",
+            6: "Slishkom mnogo zaprosov. Povtori pozhe.",
+        }
+        hint = hints.get(code, "Prover prava i tip tokena VK.")
+        # Print a short, nonsecret diagnostic to the GitHub run summary.
+        summary = os.environ.get("GITHUB_STEP_SUMMARY")
+        if summary:
+            with open(summary, "a", encoding="utf-8") as result:
+                result.write("### PHONDUP / VK API\\n\\n")
+                result.write("**Kod oshibki VK: {}**\\n\\n".format(code))
+                result.write("{}\\n\\n".format(hint))
+                result.write("Publikatsii ne bylo.\\n")
+        raise RuntimeError("VK ERROR CODE: {}\\nVK HINT: {}".format(code, hint))
     return data.get("response")
 
 def get_group_id():
@@ -48,7 +64,7 @@ def main():
     parser.add_argument("post_file", nargs="?")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    token = os.environ.get("VK_ACCESS_TOKEN", "")
+    token = os.environ.get("VK_ACCESS_TOKEN", "").strip()
     if not token:
         raise RuntimeError("Missing VK_ACCESS_TOKEN Actions secret")
     check_community_token(token)
