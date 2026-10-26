@@ -9,6 +9,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from upload_photos import upload_images
+
 V = "5.199"
 ATT = re.compile(r"^(?:photo|video|doc)-?\d+_\d+(?:_[A-Za-z0-9]+)?$")
 
@@ -100,12 +102,21 @@ def main():
         raise ValueError("Post must be approved before publishing")
     msg = payload.get("message", "")
     media = payload.get("attachments", [])
+    images = payload.get("images", [])
     if not isinstance(msg, str) or len(msg) > 12000:
         raise ValueError("Invalid message")
     if not isinstance(media, list) or len(media) > 10 or not all(isinstance(a, str) and ATT.fullmatch(a) for a in media):
         raise ValueError("Invalid VK media IDs")
-    if not msg.strip() and not media:
+    if not isinstance(images, list) or len(images) > 5:
+        raise ValueError("Images must be an array with at most five file paths")
+    if len(media) + len(images) > 10:
+        raise ValueError("VK supports up to ten attachments")
+    if not msg.strip() and not media and not images:
         raise ValueError("Cannot publish empty content")
+    # Upload only after explicit approval in the post's JSON file.
+    if images:
+        user_token = os.environ.get("VK_USER_TOKEN", "").strip()
+        media += upload_images(images, gid, user_token)
     params = {"owner_id": -gid, "from_group": 1, "message": msg, "guid": path.stem}
     if media:
         params["attachments"] = ",".join(media)
