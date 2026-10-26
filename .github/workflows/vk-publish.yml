@@ -1,0 +1,41 @@
+name: PHONDUP VK — publish approved posts
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'vk-publisher/outbox/*.json'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check credentials without posting
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
+        run: python vk-publisher/publisher.py --check
+      - name: Publish newly added and approved files
+        if: github.event_name == 'push'
+        shell: bash
+        env:
+          VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
+        run: |
+          git diff-tree --no-commit-id --name-only --diff-filter=A -r "$GITHUB_SHA" -- vk-publisher/outbox/ > /tmp/new_vk_posts.txt
+          while IFS= read -r file; do
+            case "$file" in
+              vk-publisher/outbox/*.json)
+                python vk-publisher/publisher.py "$file"
+                ;;
+            esac
+          done < /tmp/new_vk_posts.txt
