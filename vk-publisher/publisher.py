@@ -51,9 +51,12 @@ def api(method, token, **kwargs):
             with open(summary, "a", encoding="utf-8") as result:
                 result.write("### PHONDUP / VK API\n\n")
                 result.write("**Kod oshibki VK: {}**\n\n".format(code))
+                result.write("**Poyasnenie:** {}\n\n".format(reason))
+                if isinstance(subcode, int):
+                    result.write("**Subcode:** {}\n\n".format(subcode))
                 result.write("{}\n\n".format(hint))
                 result.write("Publikatsii ne bylo.\n")
-        raise RuntimeError("VK ERROR CODE: {}\nVK HINT: {}".format(code, hint))
+        raise RuntimeError("VK ERROR CODE: {}\nVK REASON: {}\nVK SUBCODE: {}\nVK HINT: {}".format(code, reason, subcode if isinstance(subcode, int) else "-", hint))
     return data.get("response")
 
 def get_group_id():
