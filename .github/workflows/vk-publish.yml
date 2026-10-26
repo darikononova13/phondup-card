@@ -26,14 +26,14 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
           VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
-          VK_GROUP_ID: ${{ vars.VK_GROUP_ID }}
+          VK_GROUP_ID: '162848624'
         run: python vk-publisher/publisher.py --check
       - name: Publish newly added and approved files
         if: github.event_name == 'push'
         shell: bash
         env:
           VK_ACCESS_TOKEN: ${{ secrets.VK_ACCESS_TOKEN }}
-          VK_GROUP_ID: ${{ vars.VK_GROUP_ID }}
+          VK_GROUP_ID: '162848624'
         run: |
           git diff-tree --no-commit-id --name-only --diff-filter=A -r "$GITHUB_SHA" -- vk-publisher/outbox/ > /tmp/new_vk_posts.txt
           while IFS= read -r file; do
