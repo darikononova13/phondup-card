@@ -23,6 +23,21 @@ def api(method, token, **kwargs):
     if "error" in data:
         error = data["error"]
         code = error.get("error_code", "?")
+        # Classify VK's error safely. Never print raw VK error text or token.
+        msg = str(error.get("error_msg", "")).lower()
+        subcode = error.get("error_subcode")
+        if "unavailable with group auth" in msg or "group auth" in msg:
+            reason = "Metod ne podderzhivaet token soobshchestva"
+        elif "another ip address" in msg or "ip address" in msg:
+            reason = "VK ogranichil token po IP-adresu"
+        elif "invalid access token" in msg or "access token is invalid" in msg:
+            reason = "VK schitaet etot token nedeistvitelnym"
+        elif "expired" in msg or "revoked" in msg:
+            reason = "VK schitaet token prosrochennym ili otzvannym"
+        elif "user authorization failed" in msg:
+            reason = "VK otkazal v avtorizatsii (net dodatelnogo poiasneniia)"
+        else:
+            reason = "VK ne soobshchil utochniaiushchuiu prichinu"
         hints = {
             5: "VK ne prinial token. Prover VK_ACCESS_TOKEN: polnyi kluch soobshchestva, bez probelov i kavychek.",
             15: "Nedostatochno prav. Prover dostup k stene soobshchestva.",
